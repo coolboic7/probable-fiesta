@@ -1,0 +1,48 @@
+# Security Rules for Code Review
+
+rules:
+  - name: "hardcoded-secrets"
+    description: "Detect hardcoded secrets and API keys"
+    severity: "critical"
+    patterns:
+      - "password\\s*=\\s*['\"][^'\"]+['\"]"
+      - "api_key\\s*=\\s*['\"][^'\"]+['\"]"
+      - "secret\\s*=\\s*['\"][^'\"]+['\"]"
+      - "token\\s*=\\s*['\"][^'\"]+['\"]"
+    message: "Hardcoded secrets detected. Use environment variables or secure vaults."
+
+  - name: "sql-injection"
+    description: "Detect potential SQL injection vulnerabilities"
+    severity: "high"
+    patterns:
+      - "execute\\s*\\(\\s*['\"].*\\+.*['\"]"
+      - "query\\s*\\(\\s*['\"].*\\+.*['\"]"
+      - "SELECT.*\\+.*FROM"
+    message: "Potential SQL injection vulnerability. Use parameterized queries."
+
+  - name: "xss-vulnerability"
+    description: "Detect potential XSS vulnerabilities"
+    severity: "high"
+    patterns:
+      - "innerHTML\\s*=\\s*.*\\+.*"
+      - "document\\.write\\s*\\(.*\\+.*\\)"
+      - "eval\\s*\\("
+    message: "Potential XSS vulnerability. Sanitize user input and avoid eval()."
+
+  - name: "insecure-random"
+    description: "Detect use of insecure random number generation"
+    severity: "medium"
+    patterns:
+      - "Math\\.random\\(\\)"
+      - "Random\\(\\)"
+    message: "Use cryptographically secure random number generators for security-sensitive operations."
+
+  - name: "weak-crypto"
+    description: "Detect weak cryptographic algorithms"
+    severity: "high"
+    patterns:
+      - "MD5"
+      - "SHA1"
+      - "DES"
+      - "RC4"
+    message: "Weak cryptographic algorithm detected. Use stronger alternatives like SHA-256 or AES."

@@ -1,0 +1,60 @@
+# Code Quality Rules for Code Review
+
+rules:
+  - name: "long-function"
+    description: "Detect functions that are too long"
+    severity: "medium"
+    patterns:
+      - "def\\s+\\w+.*:\\s*\\n(\\s+.*\\n){50,}"  # Python functions > 50 lines
+      - "function\\s+\\w+.*{[\\s\\S]{1000,}}"     # JavaScript functions > ~50 lines
+    message: "Function is too long. Consider breaking it into smaller functions."
+
+  - name: "magic-numbers"
+    description: "Detect magic numbers in code"
+    severity: "low"
+    patterns:
+      - "\\b(?!0|1|2|10|100|1000)\\d{3,}\\b"
+    message: "Magic number detected. Consider using named constants."
+
+  - name: "todo-comments"
+    description: "Detect TODO comments"
+    severity: "low"
+    patterns:
+      - "TODO"
+      - "FIXME"
+      - "HACK"
+      - "XXX"
+    message: "TODO comment found. Consider creating a ticket or fixing the issue."
+
+  - name: "console-debug"
+    description: "Detect debug statements"
+    severity: "medium"
+    patterns:
+      - "console\\.log"
+      - "console\\.debug"
+      - "print\\("
+      - "System\\.out\\.println"
+    message: "Debug statement found. Remove before production deployment."
+
+  - name: "empty-catch"
+    description: "Detect empty catch blocks"
+    severity: "high"
+    patterns:
+      - "catch\\s*\\([^)]*\\)\\s*{\\s*}"
+      - "except[^:]*:\\s*pass"
+    message: "Empty catch block detected. Handle exceptions appropriately."
+
+  - name: "deep-nesting"
+    description: "Detect deeply nested code"
+    severity: "medium"
+    patterns:
+      - "(\\s{8,}if|\\s{8,}for|\\s{8,}while)"  # 4+ levels of indentation
+    message: "Deep nesting detected. Consider refactoring to reduce complexity."
+
+  - name: "long-parameter-list"
+    description: "Detect functions with too many parameters"
+    severity: "medium"
+    patterns:
+      - "def\\s+\\w+\\([^)]*,[^)]*,[^)]*,[^)]*,[^)]*,[^)]*"  # 6+ parameters
+      - "function\\s+\\w+\\([^)]*,[^)]*,[^)]*,[^)]*,[^)]*,[^)]*"
+    message: "Function has too many parameters. Consider using objects or reducing complexity."

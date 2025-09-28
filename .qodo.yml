@@ -1,0 +1,93 @@
+# Qodo Configuration File
+# This file configures Qodo for your project
+
+# Project metadata
+project:
+  name: "AI Code Reviews"
+  description: "AI-powered code review project"
+  version: "1.0.0"
+
+# Code review settings
+review:
+  # Enable automatic code review
+  enabled: true
+  
+  # Review triggers
+  triggers:
+    - pull_request
+    - commit
+  
+  # Review scope
+  scope:
+    include:
+      - "src/**"
+      - "lib/**"
+      - "app/**"
+      - "*.py"
+      - "*.js"
+      - "*.ts"
+      - "*.java"
+      - "*.go"
+      - "*.rs"
+      - "*.cpp"
+      - "*.c"
+      - "*.cs"
+    exclude:
+      - "node_modules/**"
+      - "dist/**"
+      - "build/**"
+      - "*.min.js"
+      - "*.test.*"
+      - "*.spec.*"
+      - "__pycache__/**"
+      - "*.pyc"
+
+# AI model configuration
+ai:
+  # Model settings
+  model:
+    provider: "qodo"
+    temperature: 0.1
+    max_tokens: 2048
+  
+  # Review focus areas
+  focus:
+    - code_quality
+    - security
+    - performance
+    - maintainability
+    - best_practices
+
+# Output configuration
+output:
+  format: "markdown"
+  include_suggestions: true
+  include_explanations: true
+  severity_levels:
+    - critical
+    - high
+    - medium
+    - low
+
+# Integration settings
+integrations:
+  git:
+    enabled: true
+    auto_commit_reviews: false
+  
+  github:
+    enabled: false
+    # token: "your-github-token"
+  
+  gitlab:
+    enabled: false
+    # token: "your-gitlab-token"
+
+# Custom rules (optional)
+rules:
+  # Add custom review rules here
+  # Example:
+  # - name: "no-console-log"
+  #   pattern: "console\\.log"
+  #   severity: "medium"
+  #   message: "Remove console.log statements before production"
